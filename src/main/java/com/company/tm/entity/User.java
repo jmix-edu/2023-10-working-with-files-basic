@@ -9,6 +9,7 @@ import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.security.authentication.JmixUserDetails;
 import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Collection;
@@ -23,7 +24,7 @@ import java.util.UUID;
 public class User implements JmixUserDetails, HasTimeZone {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     @JmixGeneratedValue
     private UUID id;
 
@@ -33,6 +34,9 @@ public class User implements JmixUserDetails, HasTimeZone {
 
     @Column(name = "USERNAME", nullable = false)
     protected String username;
+
+    @Column(name = "AVATAR")
+    private byte[] avatar;
 
     @Secret
     @SystemLevel
@@ -57,6 +61,14 @@ public class User implements JmixUserDetails, HasTimeZone {
 
     @Transient
     protected Collection<? extends GrantedAuthority> authorities;
+
+    public byte[] getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
+    }
 
     public UUID getId() {
         return id;
